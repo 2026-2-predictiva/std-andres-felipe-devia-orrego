@@ -7,7 +7,6 @@ import pickle
 
 import pandas as pd
 from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
 
@@ -26,26 +25,22 @@ def pregunta_01():
     )
     dataset = pd.get_dummies(dataset, columns=["Origin"], prefix="", prefix_sep="")
 
-    y = dataset.pop("MPG")
-    x = dataset
+    train_dataset = dataset.sample(frac=0.8, random_state=0)
+    test_dataset = dataset.drop(train_dataset.index)
 
-    x_train, x_test, y_train, y_test = train_test_split(
-        x,
-        y,
-        test_size=0.2,
-        random_state=42,
-    )
+    y_train = train_dataset.pop("MPG")
+    y_test = test_dataset.pop("MPG")
 
     features_scaler = StandardScaler()
-    x_train_scaled = features_scaler.fit_transform(x_train)
-    x_test_scaled = features_scaler.transform(x_test)
+    x_train_scaled = features_scaler.fit_transform(train_dataset)
+    x_test_scaled = features_scaler.transform(test_dataset)
 
     mlp = MLPRegressor(
         hidden_layer_sizes=(64, 32),
         activation="relu",
         solver="adam",
         max_iter=5000,
-        random_state=42,
+        random_state=0,
     )
     mlp.fit(x_train_scaled, y_train)
 
