@@ -1,0 +1,5 @@
+Metrics,yt_pred_trend,yt_pred_trend_month,yt_pred_trend_sincos,yt_pred_ar_d1d12
+MSE Train,376582.81,103217.67,111966.93,66646.65
+MSE Test,1146851.21,738282.04,754794.64,138815.45
+MAE Train,459.62,259.03,271.17,188.42
+MAE Test,781.18,804.13,804.82,267.05
